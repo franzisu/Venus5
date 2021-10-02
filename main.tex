@@ -128,11 +128,12 @@
 		
 			\begin{flushleft} 
 			\emph{Team Member Names :} \\
-			Weber, Mike\linebreak
-			Hurd, Franz\linebreak
-			Dev, Kushal\linebreak
-			Galuk, Sam\linebreak
+			Weber, Michael\linebreak
+			Galuk, Samuel\linebreak
 			Hans, Rachel\linebreak
+			Hurd, Franz\linebreak
+			Suresh, Kushal\linebreak
+			
 			
 		\end{flushleft}
 	\end{minipage}\\[2 cm]
@@ -148,14 +149,30 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{ABSTRACT}
-The abstract is a summary of your proposal. In general, your abstract should have enough information so that if I was to copy and paste your abstract into a web site, people would get the general idea of what your proposal is about. It should not go into any heavy detail, just the basics of what your project is about. The who, the what, and the why. You should keep your abstract to 200-400 words. Use this to ``hook in'' your reader.
+This project will be completed by the group dubbed Venus 5. Our mission is to create a device capable of controlling vehicle altitude. “Vehicle” is used as a general term, as the proposed product would have functional capabilities for any aircraft with basic altitude control. This is not a flight computer per se, as it is essentially focused on single-variable control in the context of simplified assumptions about the vehicle’s configuration, but could be included as a component of a more complex system. 
+
+For the purposes of project demonstration simplicity, the product is intended to function with a balloon, and so the software will be structured within that context. Users will input an altitude or flight program for the Circuit Playground to execute. Any deviations from the intended flight path will be corrected so long as there is a means to do so on board. This will mainly be a pressure relief system for the balloon. The Circuit Playground will utilize these tools to regulate altitude and readjust dynamically. In the case of a balloon, a pressure relief system would allow the balloon not just to ascend until bursting, as is the case in most applications for weather balloons, but level of at a desired altitude or perform some other maneuver so as to operate at target altitudes. This basic idea, a sort of single-variable autopilot, can be applied to other types of vehicles as well. 
+
+The device in development, if programmed well and with a certain amount of flexibility, could solve the issue of creating a custom flight control program for many academic and research settings extending beyond just weather balloons. Users could just input a simple flight program to the device with details about the specific vehicle and context and let the mission execute from there. It may be an ideal solution for aerial photography on a budget, or for performing operations at high altitudes.  
 
 \section{INTRODUCTION}
-While the abstract and introduction may seem like it is similar, remember that your abstract should have enough information to stand on its own. The introduction is really the actual start to your proposal. Here you should introduce the project, the people involved and give a short introduction to the why you are doing this. This should be 1-3 paragraphs.
+Our mission, to create a simple “autopilot” system for altitude, is centered on the use case of a weather balloon because of its scientific value in being able to measure weather patterns (pressure, wind speed, temperature, humidity, etc.) and other phenomena in altitude regimes inaccessible to human researchers. What’s unique about our specific take on the balloon vehicle is the ability to control altitude, which opens a broader range of mission types than simply high-altitude weather study. Potential applications of a balloon with precision altitude control could include military reconnaissance on territories of interest behind enemy lines without sending expensive equipment into the line of fire, delivering items like medical supplies or pamphlets in humanitarian aid scenarios over national borders in times of crisis by use of varying wind conditions at different altitudes, and others. 
+
+A more ambitious use-case for our project is the interoperability aspect, or the ability for our product to control altitude for different types of aircraft as a plug-and-play service. An airplane’s elevator, the pressure in a weather balloon, or the speed of a quadcopter’s propellers are all very different altitude control agents, but the actual logic needed to command those variables might be something we can program universally with relative success, at least if we took the extra time to expand on the project. For simplicity, we will be focusing on the weather balloon application, but programming from the start to make the system universally simple for the end-user.  
 
 \section{FEATURES}
-Your Features section must include a listing of at least three key features that makes your project unique. Each item needs to be backed up with a description of what it will do and why. A listing of just three items is not enough, you need to describe what those features are and why your group feels they are needed. For that reason your features should have a paragraph for each key item that describes what that key feature is. A key feature should be something that is significant to your project. For example, a key feature an autopilot system is the ability to be able to set an altitude and the autopilot will automatically set the airspeed. That is a significant feature that has a large impact on that system.
+Our project is fundamentally composed of three distinct parts: the pressure sensor, the control algorithm, and the actuator component, all of which will be explained in this section. Our plan to use the Circuit Playground to control a vehicle’s altitude relies on the ability of the system to sense and interpret its altitude based on the barometric pressure. There are several sensors capable of this measurement, like the BMP180 pictured below. Essentially, the instrument will read the ambient pressure of the vehicle at each moment in flight, and then the software will be able to use the information to make in-flight decisions. In the worst-case scenario during project development, we can use other methods, like accelerometer data, or combine methods in conjunction with pressure sensing to increase sensitivity and functionality. 
 
+\begin{figure}[!t]
+\centering
+\includegraphics[width=3 in]{BMP.jpg}
+\caption{BMP180 Barometric Pressure Sensor}
+\label{fig:cpx}
+\end{figure}
+
+The second feature of our system is the control algorithm itself. As the vehicle, be it a balloon, an airplane, or any other desired craft approaches a certain altitude, the control algorithm reads data from the pressure sensor, as well as data fed from the built-in accelerometer, and then sends commands to the actuator to slow the rate of ascent and eventually level off at that altitude. While we are modeling the program around a balloon vehicle, our goal is to make the program such that the user can plug-and-play different kinds of cyber-physical systems into the same code platform to complete single-variable automatic vehicle control. 
+
+The third feature of our system is the actuator. The reason that “actuator” is used here is to be slightly ambiguous. In the case of a weather balloon, this would most likely be a valve of some sort, mechanical or solenoid maybe, that would allow the circuit board to release pressure from the balloon and slow the rate of descent until a certain altitude target is reached. There are several advantages to this, given that, typically, the balloon explodes at high altitude and that the descent that follows is relatively uncontrolled under a parachute, whereas a valve allows the payload to return to the surface slowly and without damaging the balloon. The reason that we are choosing to simply focus on the actuator is because the success or failure of the actual flight vehicle (the balloon, or, in other cases, the drone or other rocket) is less relevant to the actual project (taking in pressure data, interpreting altitude, and making decisions in the form of an actuator in light of constantly changing pressure data). In other words, if balloon development fails, we can still demonstrate the success of the program itself using other testing methods, like changing altitude manually with a string and measuring system outputs with lights, dummy valves, or some other indicator to show algorithm performance. 
 
 % Below is an example of inserting an image.  Not that LaTex
 % will determine the best location for the image.  Make sure
@@ -163,27 +180,28 @@ Your Features section must include a listing of at least three key features that
 % You can use the \label{name} to name the figure and then reference
 % it from your writeup and LaTeX will automatically give it the correct
 % number. 
+
+
+\section{PROBLEM STATEMENT}
+In industry testing high altitude devices and data collection can be a costly endeavor. For this reason, many people turn to high altitude balloons as an alternative for testing or data collecting at higher altitudes in the atmosphere. Many of these balloons are not recovered for several reasons but primarily due to the weather carrying them long distances and even over the ocean where recovering them is a fool’s errand.  
+
+Building an operating system can seem daunting to hobbyist and other companies that would like to use balloons purely for research. Hiring someone to build and customize the system can be costly and take time. The controlling device will need to be able to detect and control acceleration induced by the air in the balloon or external forces such as wind and temperature. The purpose of this would be to alert the sender that the balloon is changing its trajectory or altitude. Along with controlling the altitude of the balloon we will need to collect and store data from the trip such as pressures, wind speeds and temperature readings. Additionally, as a bonus we would like the device to be able to track the speed via GPS and take humidity readings during the flight. 
+
 \begin{figure}[!t]
 \centering
-\includegraphics[width=4.5in]{cpx01.jpg}
-\caption{This is the Circuit Playground Express}
+\includegraphics[width=3 in]{20211001_221557.jpg}
+\caption{This is a diagram of the balloon and the attached device \cite{Figure1}}
 \label{fig:cpx}
 \end{figure}
 
-\section{PROBLEM STATEMENT}
-Here you will go into more detail on what problem you hope to solve or address.  You should discuss what the problem is and why it is important to solve it. In this section, you need to be clear on what the problem is, so do not think of this as a ``light'' section. It helps to define your project.
-
-Your team needs to do some research into the problem at hand. Becuase of that, you should have around two to three references that you are pulling from. There are lots of places you can find references from including the ISU library and Google Scholar. I would also suggest looking at Adafruit's website, as you may find inspiration or looking to improve something already there. Remember to cite your sources though. If you find something online, that can often be citation.
-
-When you create your ``ref.bib'' file, don't forget to follow the standards for a BiBTex file. Certain things like webistes requires certain keywords for it to render properly. There are lots of sources online to help with this and many places like the ISU Library and Google Scholar can also generate text that is compatible with a BiBTex file. Once you have your Bib file ready, don't forget to cite your citations in your proposal like this \cite{einstein} or this \cite{dirac}.
 
 \section{PROBLEM SOLUTION}
-Here go over your approach to your solution and what your solution is. You must include at least one image that shows your concept. This image can be a sketch or drawing or some pictures that show your concept. Make sure you reference the image(s) like this - Figure \ref{fig:cpx}. Finally, make sure you replace the stock image I included. You should also reference any sources you had from your problem statement as well.
+The solution our team has produced is an off the shelf Circuit Playground express. We are going to fit this Circuit Playground express with a barometric sensor, a solenoid valve, a wind speed indicator, and a GPS at a minimum. Additionally, a humidity sensor and a 4G cellular transmitter can be fitted if there is no desire to retrieve the balloon. (We will not be experimenting with these options unless we have the time during the semester). We will pair this with C code that will allow the Circuit Playground function with the sensors attached as well as interface with the user. The code will be setup in a manner which a user would be prompted to give a target altitude and a duration of flight at that altitude. More than one flight altitude or duration can be chosen allowing for a stepped ascension flight path and can descend in the same or differing manner. Based on the flight path given by the user the solenoid valve will adjust the pressure in the balloon to maintain or adjust altitude accordingly. As far as the sensor readings are concerned the user can pick an allocated time or relative position to take data or run continuously.   
 
-You must also include a table that lists all the parts that you wish to have. As announced in class, you will have the parts listed in Table \ref{table:parts_list}. We have plenty of two additional parts. Those are a conductive adhesive strip and a neopixel strip. I do have some other parts, such as arcade buttons and some additional sensors. You can certainly ask for something, and I will see what I can do. Change the table below to reflect the parts you are requesting.
+
 
 \begin{table}[ht]
-  \caption{Parts available for teams}
+  \caption{Parts our team will need}
   \label{table:parts_list}
   \begin{center}
   \begin{tabular}{|p{3in}|c|}
@@ -194,51 +212,24 @@ You must also include a table that lists all the parts that you wish to have. As
   \hline
   Adafruit Circuit Playground Express & 1 \\
   \hline
-  AAA Battery Holder & 1 \\
+  BMP180 Barometric Pressure Sensor & 1 \\
   \hline
-  USB Cable & 1 \\
+  Alligator jumper wires & 6 \\
+  \hline
+  Plastic Water Solenoid Valve & 1 \\
   \hline
   \end{tabular}
   \end{center}
   \end{table}
 
-Finally, you can also include any pseudo code or any code snippets you have gathered so far.  This is not required, but if you found some starter code or came up with some ideas for the code, put it here. If you want to embed code into \LaTeX, you can use the example below on how to do this in \LaTeX.
-
-\begin{lstlisting}[language=Arduino]
-#include <Adafruit_CircuitPlayground.h>
-
-void setup() {
-  CircuitPlayground.begin();
-}
-
-void loop() {
-  CircuitPlayground.clearPixels();
-
-  delay(500);
-
-  CircuitPlayground.setPixelColor(0, 255,   0,   0);
-  CircuitPlayground.setPixelColor(1, 128, 128,   0);
-  CircuitPlayground.setPixelColor(2,   0, 255,   0);
-  CircuitPlayground.setPixelColor(3,   0, 128, 128);
-  CircuitPlayground.setPixelColor(4,   0,   0, 255);
-  
-  CircuitPlayground.setPixelColor(5, 0xFF0000);
-  CircuitPlayground.setPixelColor(6, 0x808000);
-  CircuitPlayground.setPixelColor(7, 0x00FF00);
-  CircuitPlayground.setPixelColor(8, 0x008080);
-  CircuitPlayground.setPixelColor(9, 0x0000FF);
- 
-  delay(5000);
-}
-\end{lstlisting}
-
 \section{CONCLUSION}
-Finally, wrap up your proposal. This only needs to be one or two paragraphs, but it should conclude with what you plan to do and the why and how. Yes, this may seem repetitive, but that is intentional. Do not forget to update your references as those will appear below in a seperate page.
 
-\newpage
-\section{References}
+The mission of the Venus 5 group is to build a program for a device that can detect vehicle altitude and control it. Using the model environment of a weather balloon, this will entail designing code that takes in pressure data, uses input data to interpret the current altitude and ascent/descent rate states, and then output commands to a pressure relief valve (or some other control mechanism to be determined) to hold target altitudes. The goal is to design the system in such a way as to be able to control altitude for various types of aircraft, with a rationale being that the system is only controlling for one variable, not for the full flight stability spectrum of guidance, navigation, and control. If the system is capable of demonstrating altitude control software in verification tests with simple mock up methods, then more ambitious work can be done to incorporate the system onto a balloon flight-test article.
+
+
+%\section{References}
 \printbibliography[heading=subbibintoc]
-\bibliographystyle{plain}
-\bibliography{ref}
+%\bibliographystyle{plain}
+%\bibliography{ref}
 
 \end{document}
